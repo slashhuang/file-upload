@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>显示缩略图</title>
+    <style>
+        #preview{
+            width:200px;
+            height:auto;
+            display: inline-block;
+        }
+    </style>
+</head>
+<!--使用readAsDataURL转换图片格式为base64
+    使用fileReader异步加载图片，在onload事件成功后，将base64图片数据赋值给img的src标签
+-->
+<body>
+<div id="dropbox">
+    请拖拽至此处
+</div>
+<div id="preview"></div>
+<script>
+    var dropbox;
+    dropbox = document.getElementById("dropbox");
+    dropbox.addEventListener("dragenter", dragenter, false);
+    dropbox.addEventListener("dragover", dragover, false);
+    dropbox.addEventListener("drop", drop, false);
+    function dragenter(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+
+    function dragover(e) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+    function drop(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        var dt = e.dataTransfer;
+        var files = dt.files;
+
+        handleFiles(files);
+    }
+</script>
+<script>
+    function handleFiles(files) {
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var imageType = /^image\//;
+
+            if (!imageType.test(file.type)) {
+                continue;
+            }
+
+            var img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            var preview=document.getElementById('preview')
+            preview.appendChild(img); // Assuming that "preview" is the div output where the content will be displayed.
+
+            var reader = new FileReader();
+            reader.onload = (function(aImg) {
+                return function(e) {
+                    if(i==0){alert(0)};
+                    aImg.src = e.target.result;
+                }; })(img);//循环注意闭包
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+</body>
+</html>

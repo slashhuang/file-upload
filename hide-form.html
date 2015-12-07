@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+<a href="#" id="fileSelect">Select some files</a>
+<script>
+    var fileSelect = document.getElementById("fileSelect"),
+            fileElem = document.getElementById("fileElem");
+
+    fileSelect.addEventListener("click", function (e) {
+        if (fileElem) {
+            fileElem.click();
+        }
+        e.preventDefault(); // prevent navigation to "#"
+    }, false);
+    var handleFiles = function(files){
+        Array.prototype.slice.call(files).forEach(function (file) {
+            console.dir(file)
+        })
+    }
+</script>
+
+</body>
+</html>
