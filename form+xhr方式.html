@@ -18,6 +18,7 @@
 <script>
     function sendForm() {
         var oOutput = document.getElementById("output");
+        console.dir(document.forms.namedItem("fileinfo"));
         var oData = new FormData(document.forms.namedItem("fileinfo"));
 
         oData.append("CustomField", "This is some extra data");
